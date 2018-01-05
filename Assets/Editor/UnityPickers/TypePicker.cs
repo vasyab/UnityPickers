@@ -12,6 +12,7 @@ namespace Editor.UnityPickers
 			[NotNull] Func<IEnumerable<Type>> valuesCollector,
 			[NotNull] Action<Type> callback,
 			bool showNow = false,
+			[CanBeNull] GUIStyle style = null,
 			[NotNull] params GUILayoutOption[] options)
 		{
 			Button(
@@ -20,6 +21,7 @@ namespace Editor.UnityPickers
 				valuesCollector,
 				callback,
 				showNow,
+				style,
 				options
 			);
 		}

@@ -490,7 +490,9 @@ namespace Editor.UnityPickers
 								AssetType = type;
 								UpdateAssetList();
 								focusNameFilter = true;
-							}
+							},
+							style: EditorStyles.popup,
+							options: GUILayout.Width(120)
 						);
 					}
 					else

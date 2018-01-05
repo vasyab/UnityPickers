@@ -86,10 +86,11 @@ namespace Editor.UnityPickers
 			[NotNull] Func<IEnumerable<T>> valuesCollector,
 			[NotNull] Action<T> callback, 
 			bool showNow = false,
+			[CanBeNull] GUIStyle style = null,
 			[NotNull] params GUILayoutOption[] options)
 		{
 			var rect = GUILayoutUtility.GetRect(new GUIContent(buttonText), GUI.skin.button, options);
-			Button(windowCreator, rect, buttonText, valuesCollector, callback, showNow);
+			Button(windowCreator, rect, buttonText, valuesCollector, callback, showNow, style);
 		}
 
 		protected static void Button(

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Editor.UnityPickers
@@ -7,11 +8,12 @@ namespace Editor.UnityPickers
 	public class StringPicker : ValuePicker<string>
 	{
 		public static void Button(
-			string buttonText,
-			Func<IEnumerable<string>> valuesCollector,
-			Action<string> callback,
+			[NotNull] string buttonText,
+			[NotNull] Func<IEnumerable<string>> valuesCollector,
+			[NotNull] Action<string> callback,
 			bool showNow = false,
-			params GUILayoutOption[] options)
+			[CanBeNull] GUIStyle style = null,
+			[NotNull] params GUILayoutOption[] options)
 		{
 			Button(
 				GetWindow<StringPicker>,
@@ -19,17 +21,18 @@ namespace Editor.UnityPickers
 				valuesCollector,
 				callback,
 				showNow,
+				style,
 				options
 			);
 		}
 
 		public static void Button(
 			Rect rect,
-			string buttonText,
-			Func<IEnumerable<string>> valuesCollector,
-			Action<string> callback,
+			[NotNull] string buttonText,
+			[NotNull] Func<IEnumerable<string>> valuesCollector,
+			[NotNull] Action<string> callback,
 			bool showNow = false,
-			GUIStyle style = null)
+			[CanBeNull] GUIStyle style = null)
 		{
 			Button(
 				GetWindow<StringPicker>,
