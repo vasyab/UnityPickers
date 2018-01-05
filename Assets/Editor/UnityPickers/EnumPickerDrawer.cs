@@ -11,22 +11,17 @@ namespace Editor.UnityPickers
 	{
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
 		{
+			string controlId = "enum:" + property.propertyPath;
+
 			Rect fieldRect;
 			if (!string.IsNullOrEmpty(label.text))
 			{
-				var labelRect = new Rect(
-					position.x,
-					position.y,
-					EditorGUIUtility.labelWidth,
-					position.height
-				);
 				fieldRect = new Rect(
 					position.x + EditorGUIUtility.labelWidth,
 					position.y,
 					position.width - EditorGUIUtility.labelWidth,
 					position.height
 				);
-				EditorGUI.LabelField(labelRect, label);
 			}
 			else
 			{
@@ -54,6 +49,12 @@ namespace Editor.UnityPickers
 				currentName = "[Unknown]";
 			}
 
+			var evt = Event.current;
+			bool showHotKey =
+				GUI.GetNameOfFocusedControl() == controlId &&
+				evt.type == EventType.KeyDown &&
+				evt.keyCode == KeyCode.Return;
+
 			var p = property.Copy();
 			EnumPicker.Button(
 				fieldRect,
@@ -65,8 +66,18 @@ namespace Editor.UnityPickers
 					p.enumValueIndex = Array.IndexOf(valuesArray, e);
 					p.serializedObject.ApplyModifiedProperties();
 				},
-				style: EditorStyles.popup
+				showHotKey,
+				EditorStyles.popup
 			);
+
+			if (showHotKey)
+			{
+				evt.Use();
+			}
+
+			// draw label and focusable control
+			GUI.SetNextControlName(controlId);
+			EditorGUI.Popup(position, label, 0, new[] { new GUIContent(currentName) });
 		}
 	}
 }
