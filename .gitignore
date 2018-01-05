@@ -1,0 +1,11 @@
+.vs
+Library
+UnityPickers.sln
+UnityPickers.sln.DotSettings.user
+UnityPickers.userprefs
+UnityPickers.v12.suo
+Temp
+obj
+*.csproj
+.idea
+*.iml
