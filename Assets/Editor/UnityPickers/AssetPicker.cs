@@ -229,7 +229,7 @@ namespace Editor.UnityPickers
 			yield return typeof(GameObject);
 			yield return typeof(Material);
 			yield return typeof(Texture);
-			yield return typeof(Scene);
+			yield return typeof(SceneAsset);
 			yield return typeof(ScriptableObject);
 
 			var assemblies = AppDomain.CurrentDomain.GetAssemblies();
