@@ -580,7 +580,9 @@ namespace Editor.UnityPickers
 				return;
 			}
 
-			// TODO: left, right arrows?
+			// todo: left arrow to collapse
+			// todo: right arrow to expand? (would need to make folders selectable)
+			// todo: page up / page down
 			switch (evt.keyCode)
 			{
 				case KeyCode.Return:
@@ -787,6 +789,7 @@ namespace Editor.UnityPickers
 				{
 					if (Event.current.control)
 					{
+						// todo: fix blinking
 						// ctrl-click: add/remove to selection
 						Selection.objects = selected
 							? Selection.objects.Where(o => o != entry.Asset).ToArray()
