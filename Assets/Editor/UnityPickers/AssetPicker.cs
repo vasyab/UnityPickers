@@ -160,7 +160,6 @@ namespace Editor.UnityPickers
 		public static void ShowAssetPicker()
 		{
 			var w = GetWindow<AssetPicker>();
-			w.AssetType = typeof(Object);
 			w.focusNameFilter = true;
 			w.UpdateAssetList();
 		}
@@ -491,7 +490,8 @@ namespace Editor.UnityPickers
 								AssetType = type;
 								UpdateAssetList();
 								focusNameFilter = true;
-							});
+							}
+						);
 					}
 					else
 					{
@@ -553,14 +553,14 @@ namespace Editor.UnityPickers
 			// footer
 			if (assetsShown == assetShowCount)
 			{
-				if (GUILayout.Button(assetsShown + " assets. Show more..."))
+				if (GUILayout.Button(assetsShown + " assets shown. Show more..."))
 				{
 					assetShowCount += AssetShowCountStep;
 				}
 			}
 			else
 			{
-				GUILayout.Box(assetsShown + " assets total.", GUILayout.ExpandWidth(true));
+				GUILayout.Box(assetsShown + " assets shown.", GUILayout.ExpandWidth(true));
 			}
 
 			if (scrollToSelected)
