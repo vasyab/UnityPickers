@@ -139,9 +139,6 @@ namespace Editor.UnityPickers
 
 		private Vector2 scroll;
 
-		private static readonly string[] PossibleTypeFilters;
-		private static string[] contextMenusFirstLevel;
-
 		private readonly HashSet<string> foldedPaths = new HashSet<string>();
 
 		[CanBeNull]
