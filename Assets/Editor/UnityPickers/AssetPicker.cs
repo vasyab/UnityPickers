@@ -156,15 +156,16 @@ namespace Editor.UnityPickers
 
 		private HierarchyEntry firstVisibleEntry;
 
-		[MenuItem("Tools/Asset picker %&#A", false, 5000)]
-		public static void ShowAssetPicker()
+		[MenuItem("Tools/Asset Picker %&#O", false, 5000)]
+		public static void OpenWindow()
 		{
 			var w = GetWindow<AssetPicker>();
 			w.focusNameFilter = true;
 			w.UpdateAssetList();
 		}
 
-		public static void ShowAssetPicker(
+		// todo: prettifty Show signatures
+		public static void Show(
 			[NotNull] Type assetType, 
 			[CanBeNull] FieldInfo fieldInfo, 
 			[NotNull] Action<Object> callback, 
@@ -204,7 +205,11 @@ namespace Editor.UnityPickers
 			w.Focus();
 		}
 
-	    public static void ShowAssetPicker<T>(Action<Object> callback, string[] labels, bool enableSelectionOnClick = false, Object selectedAsset = null)
+	    public static void Show<T>(
+			[NotNull] Action<Object> callback, 
+			[CanBeNull] string[] labels = null, 
+			bool enableSelectionOnClick = false, 
+			[CanBeNull] Object selectedAsset = null)
 	    {
 	        var w = CreateInstance<AssetPicker>();
 	        w.enableSelectionOnClick = enableSelectionOnClick;
@@ -224,34 +229,20 @@ namespace Editor.UnityPickers
             w.Focus();
         }
 
-		public IEnumerable<Type> CollectAssetTypes()
-		{
-			yield return typeof(GameObject);
-			yield return typeof(Material);
-			yield return typeof(Texture);
-			yield return typeof(SceneAsset);
-			yield return typeof(ScriptableObject);
-
-			var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-			var gameAssembly = assemblies.Single(a => a.FullName.Contains("Assembly-CSharp,"));
-			var soTypes = TypeEx.GetSubclasses<ScriptableObject>(true, gameAssembly);
-
-			foreach (var type in soTypes)
-			{
-				yield return type;
-			}
-		}
-
 		// todo: c# docs
 
 		/// <summary>
 		/// Shows built-in ObjectField with custom value source and pick target
 		/// </summary>
-		public static void ShowPropertyField(
-			Rect position, SerializedProperty property, FieldInfo fieldInfo, 
-			Object currentValue, Action<Object> pickCallback, 
-			GUIContent label, Type assetType,
-			Func<HierarchyEntry, bool> filter = null)
+		public static void PropertyField(
+			Rect position, 
+			[NotNull] SerializedProperty property, 
+			[NotNull] FieldInfo fieldInfo,
+			[CanBeNull] Object currentValue, 
+			[NotNull] Action<Object> pickCallback,
+			[NotNull] GUIContent label, 
+			[NotNull] Type assetType,
+			[CanBeNull] Func<HierarchyEntry, bool> filter = null)
 		{
 			using (var scope = new EditorGUI.PropertyScope(position, label, property))
 			{
@@ -284,7 +275,7 @@ namespace Editor.UnityPickers
 				else if (showHotKey || GUI.Button(buttonPos, "", GUIStyle.none))
 				{
 					// invisible button overrides object picker
-					ShowAssetPicker(
+					Show(
 						assetType,
 						fieldInfo,
 						o =>
@@ -315,7 +306,7 @@ namespace Editor.UnityPickers
 
 				if (GUI.GetNameOfFocusedControl() == controlName)
 				{
-					// todo: fix copy paste
+					// todo: implement copy paste
 					// CopyPasteController.Process(assetType, property);
 				}
 
@@ -329,28 +320,37 @@ namespace Editor.UnityPickers
 		/// <summary>
 		/// Shows built-in ObjectField, but overrides thumb button to call our AssetPicker window instead
 		/// </summary>
-		public static void ShowPropertyField(Rect position, SerializedProperty property, FieldInfo fieldInfo, GUIContent label, Type assetType, Func<HierarchyEntry, bool> filter = null)
+		public static void PropertyField(
+			Rect position, 
+			[NotNull] SerializedProperty property, 
+			[NotNull] FieldInfo fieldInfo, 
+			[NotNull] GUIContent label, 
+			[NotNull] Type assetType, 
+			[CanBeNull] Func<HierarchyEntry, bool> filter = null)
 		{
-			Action<Object> pickCallback = 
+			Action<Object> pickCallback =
 				o => property.objectReferenceValue = o;
-			ShowPropertyField(
+			PropertyField(
 				position, property, fieldInfo,
 				property.objectReferenceValue, pickCallback,
 				label, assetType, filter
 			);
 		}
 
-		public static void ShowObjectField(
-			Rect position, Object currentValue, Action<Object> pickCallback,
-			GUIContent label, Type assetType,
-			Func<HierarchyEntry, bool> filter = null)
+		public static void ObjectField(
+			Rect position, 
+			[CanBeNull] Object currentValue, 
+			[NotNull] Action<Object> pickCallback,
+			[NotNull] GUIContent label, 
+			[NotNull] Type assetType,
+			[CanBeNull] Func<HierarchyEntry, bool> filter = null)
 		{
 			EditorGUI.BeginChangeCheck();
 			var buttonPos = position;
 			buttonPos.xMin = buttonPos.xMax - EditorGUIUtility.singleLineHeight;
 			var requesterWindow = focusedWindow;
 
-			string controlName = "ObjField"+label.text;
+			string controlName = "ObjField" + label.text;
 			var e = Event.current;
 			bool showHotKey =
 				GUI.GetNameOfFocusedControl() == controlName &&
@@ -374,7 +374,7 @@ namespace Editor.UnityPickers
 			else if (showHotKey || GUI.Button(buttonPos, "", GUIStyle.none))
 			{
 				// invisible button overrides object picker
-				ShowAssetPicker(
+				Show(
 					assetType,
 					null,
 					o =>
@@ -402,6 +402,24 @@ namespace Editor.UnityPickers
 			if (EditorGUI.EndChangeCheck())
 			{
 				pickCallback(obj);
+			}
+		}
+
+		public IEnumerable<Type> CollectAssetTypes()
+		{
+			yield return typeof(GameObject);
+			yield return typeof(Material);
+			yield return typeof(Texture);
+			yield return typeof(SceneAsset);
+			yield return typeof(ScriptableObject);
+
+			var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+			var gameAssembly = assemblies.Single(a => a.FullName.Contains("Assembly-CSharp,"));
+			var soTypes = TypeEx.GetSubclasses<ScriptableObject>(true, gameAssembly);
+
+			foreach (var type in soTypes)
+			{
+				yield return type;
 			}
 		}
 

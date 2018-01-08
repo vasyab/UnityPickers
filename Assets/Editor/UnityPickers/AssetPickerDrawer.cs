@@ -15,9 +15,12 @@ namespace Editor.UnityPickers
 			if (assetType.IsUnityCollection())
 				assetType = assetType.GetElementType();
 
+			if (assetType == null)
+				return;
+
 			var a = fieldInfo.GetAttribute<AssetPickerAttribute>();
 
-			AssetPicker.ShowPropertyField(
+			AssetPicker.PropertyField(
 				position, property, fieldInfo,
 				label, assetType,
 				he => a == null || he.Path.Contains(a.Path)

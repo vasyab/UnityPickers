@@ -9,10 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b39f6e84c4284def828908dace078c2c, type: 3}
-  m_Name: Root
+  m_Name: START_HERE
   m_EditorClassIdentifier: 
-  Monsters:
-  - {fileID: 11400000, guid: 8f68f7791183abd458bf9ebee40de012, type: 2}
-  - {fileID: 11400000, guid: 6236317bb59716342ba83c17cf36f989, type: 2}
-  - {fileID: 11400000, guid: 46f2f905e3d786a4f8ba428d82d846db, type: 2}
-  - {fileID: 11400000, guid: 4c150a27badb11c4ea87c7e99e154d3e, type: 2}
+  Monster: {fileID: 0}
+  Faction: {fileID: 0}
+  MonsterType: 0
+  AnyPrefab: {fileID: 0}
+  MonsterPrefab: {fileID: 0}
+  Icon: {fileID: 0}

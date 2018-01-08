@@ -17,8 +17,6 @@ namespace Editor.UnityPickers
 
 		private static GUIStyle selectedStyle;
 
-		// todo: previous selected style
-
 		[CanBeNull]
 	    private T prevPicked;
 

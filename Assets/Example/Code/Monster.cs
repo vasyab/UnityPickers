@@ -12,5 +12,8 @@ namespace Example.Code
 
 		[AssetPicker("Example/Monsters/Prefabs")]
 		public MonsterView Prefab;
+
+		[AssetPicker]
+		public Texture Icon;
 	}
 }
