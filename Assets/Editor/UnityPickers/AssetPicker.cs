@@ -6,12 +6,10 @@ using System.Text;
 using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityPickers;
 using UnityPickers.Utility;
 using Object = UnityEngine.Object;
 
-namespace Editor.UnityPickers
+namespace UnityPickers
 {
 	public class AssetPicker : EditorWindow
 	{

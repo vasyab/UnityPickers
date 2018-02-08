@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace Editor.UnityPickers
+namespace UnityPickers
 {
 	public class EnumPicker : ValuePicker<Enum>
 	{

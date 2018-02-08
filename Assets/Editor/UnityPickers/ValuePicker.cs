@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityPickers.Utility;
 
-namespace Editor.UnityPickers
+namespace UnityPickers
 {
 	// ReSharper disable StaticMemberInGenericType
 	public abstract class ValuePicker<T> : EditorWindow

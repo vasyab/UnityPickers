@@ -1,9 +1,8 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using UnityPickers;
 using UnityPickers.Utility;
 
-namespace Editor.UnityPickers
+namespace UnityPickers
 {
 	[CustomPropertyDrawer(typeof(AssetPickerAttribute))]
 	[CustomPropertyDrawer(typeof(ScriptableObject), true)]

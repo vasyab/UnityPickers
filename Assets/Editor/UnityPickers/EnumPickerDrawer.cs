@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityPickers.Utility;
 
-namespace Editor.UnityPickers
+namespace UnityPickers
 {
 	[CustomPropertyDrawer(typeof(Enum), true)]
 	public class EnumPickerDrawer : PropertyDrawer
